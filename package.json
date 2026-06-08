@@ -1,0 +1,9 @@
+{
+    "name": "responsive-auditor-github-actions",
+    "version": "1.0.0",
+    "main": "audit.js",
+    "dependencies": {
+      "puppeteer": "^22.0.0",
+      "simplecrawler": "^1.1.9"
+    }
+  }
