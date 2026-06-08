@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // আপনার এজেন্সির যে ওয়েবসাইটটি চেক করতে চান তার রুট ডোমেন এখানে দিন
-const targetDomain = "https://example.com"; 
+const targetDomain = "https://www.logoinhours.com/"; 
 
 const viewports = [
     { name: 'Mobile', width: 375, height: 812 },

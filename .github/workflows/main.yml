@@ -1,13 +1,13 @@
 name: Automated Responsive Audit
 
 on:
-  workflow_dispatch: # এর মাধ্যমে আপনি গিটহাব ড্যাশবোর্ড থেকে ১-ক্লিকে রান করতে পারবেন
+  workflow_dispatch: # ১-ক্লিকে রান করার জন্য
   schedule:
-    - cron: '0 0 * * 0' # এটি প্রতি সপ্তাহে রবিবার রাত ১২টায় অটোমেটিক রান হবে
+    - cron: '0 0 * * 0' # প্রতি সপ্তাহে অটোমেটিক রান হবে
 
 jobs:
   audit-job:
-    runs-on: ubuntu-latest # গিটহাবের ফ্রি লিনাক্স সার্ভার
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
@@ -16,7 +16,12 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-level: '18'
+        node-version: '20' # (ফিক্স করা হয়েছে: node-level এর জায়গায় node-version হবে)
+
+    - name: Install Google Chrome (For Puppeteer)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
     - name: Install Dependencies
       run: |
@@ -30,6 +35,6 @@ jobs:
       run: |
         git config --global user.name "GitHub Action Bot"
         git config --global user.email "actions@github.com"
-        git add screenshots/ report.json
+        git add screenshots/ report.json || true
         git commit -m "Automated responsive audit report updated [skip ci]" || exit 0
         git push
