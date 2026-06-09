@@ -1,13 +1,17 @@
 name: Automated Responsive Audit
 
 on:
-  workflow_dispatch: # ১-ক্লিকে রান করার জন্য
+  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
   schedule:
-    - cron: '0 0 * * 0' # প্রতি সপ্তাহে অটোমেটিক রান হবে
+    - cron: '0 0 * * 0' # প্রতি সপ্তাহে অটো রান
 
 jobs:
   audit-job:
     runs-on: ubuntu-latest
+    
+    # গিটহাবের নতুন নোড ২৪ ওয়ার্নিং ফিক্স করার জন্য এনভায়রনমেন্ট সেটআপ
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - name: Checkout Code
@@ -16,12 +20,12 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20' # (ফিক্স করা হয়েছে: node-level এর জায়গায় node-version হবে)
+        node-version: '24' # নোড ২৪ ব্যবহার করা হচ্ছে
 
-    - name: Install Google Chrome (For Puppeteer)
+    - name: Install Google Chrome & Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
+        sudo apt-get install -y google-chrome-stable libgbm-dev
 
     - name: Install Dependencies
       run: |
